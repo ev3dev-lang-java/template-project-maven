@@ -22,12 +22,15 @@
     <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <slf4j-simple.version>1.7.25</slf4j-simple.version>
     <ev3dev-lang-java.version>2.6.2-SNAPSHOT</ev3dev-lang-java.version>
 
     <!-- EV3 Parameters -->
     <ev3.host>192.168.1.151</ev3.host>
     <ev3.user>robot</ev3.user>
     <ev3.password>maker</ev3.password>
+
   </properties>
 
   <repositories>
@@ -47,6 +50,11 @@
   </repositories>
 
   <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j-simple.version}</version>
+    </dependency>
     <dependency>
       <groupId>com.github.ev3dev-lang-java</groupId>
       <artifactId>ev3dev-lang-java</artifactId>
@@ -85,8 +93,30 @@
           </configuration>
         </plugin>
         <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.1.1</version>
+
+          <configuration>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+
+            <archive>
+              <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+            </archive>
+          </configuration>
+
+          <executions>
+            <execution>
+              <id>make-assembly</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>

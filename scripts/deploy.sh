@@ -17,19 +17,19 @@ ARTIFACT=$4
 function deploy() {
 
     echo "Deploy artifact to EV3"
-    echo "sshpass -p $EV3_PASSWORD scp -P 22 ./target/$ARTIFACT.jar $EV3_USER@$EV3_HOST:/home/robot/"
+    echo "sshpass -p $EV3_PASSWORD scp -P 22 ./target/$ARTIFACT-jar-with-dependencies.jar $EV3_USER@$EV3_HOST:/home/robot/"
     sshpass -p $EV3_PASSWORD \
         scp -P 22 \
-        ./target/$ARTIFACT.jar $EV3_USER@$EV3_HOST:/home/robot/
+        ./target/$ARTIFACT-jar-with-dependencies.jar $EV3_USER@$EV3_HOST:/home/robot/
 }
 
 function run() {
 
     echo "Run artifact"
-    echo "sshpass -p $EV3_PASSWORD ssh -p 22 $EV3_USER@$EV3_HOST java -jar $ARTIFACT.jar"
+    echo "sshpass -p $EV3_PASSWORD ssh -p 22 $EV3_USER@$EV3_HOST java -jar $ARTIFACT-jar-with-dependencies.jar"
     sshpass -p $EV3_PASSWORD \
         ssh -p 22 \
-        $EV3_USER@$EV3_HOST "java -jar $ARTIFACT.jar"
+        $EV3_USER@$EV3_HOST "java -jar $ARTIFACT-jar-with-dependencies.jar"
 }
 
 deploy
